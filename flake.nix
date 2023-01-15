@@ -1,10 +1,7 @@
 {
   description = "busybox shell in an appimage";
 
-  # nix build .#defaultPackage.powerpc64le-linux
-
   inputs = {
-    # need nixpkgs including https://github.com/NixOS/nixpkgs/pull/199978
     nixpkgs.url      = "github:NixOS/nixpkgs/release-22.11";
     flake-utils.url  = "github:numtide/flake-utils";
   };
@@ -18,7 +15,7 @@
       in
       with pkgs;
       {
-        defaultPackage = let 
+        defaultPackage = let
         busybox-bin = pkgs.stdenv.mkDerivation {
           name = "busybox-bin";
           phases = "installPhase";
@@ -28,9 +25,8 @@
           '';
         };
         in writeShellScriptBin "entry" ''
-        export PATH=${busybox-bin}:${nix}/bin:$PATH
+        export PATH=${busybox-bin}:$PATH
         echo "you're in busyboxbox now, friend."
-        uname -a
         ${busybox-bin}/sh
         '';
       }
