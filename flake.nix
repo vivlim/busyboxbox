@@ -28,8 +28,9 @@
           '';
         };
         in writeShellScriptBin "entry" ''
-        export PATH=${busybox-bin}:/bin:$PATH
+        export PATH=${busybox-bin}:${nix}/bin:$PATH
         echo "you're in busyboxbox now, friend."
+        uname -a
         ${busybox-bin}/sh
         '';
       }
